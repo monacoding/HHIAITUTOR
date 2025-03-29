@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Tutor</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #f5f5f5; display: flex; flex-direction: column; height: 100vh; }
+        header { background-color: #121212; padding: 16px; font-size: 20px; text-align: center; border-bottom: 1px solid #333; }
+        main { display: flex; flex: 1; overflow: hidden; }
+        .sidebar { width: 30%; background-color: #252526; padding: 20px; overflow-y: auto; border-right: 1px solid #333; }
+        .chat-area { flex: 1; display: flex; flex-direction: column; padding: 20px; }
+        .messages { flex: 1; overflow-y: auto; margin-bottom: 10px; }
+        .message { max-width: 75%; padding: 12px 16px; border-radius: 16px; margin: 10px 0; line-height: 1.5; white-space: pre-wrap; word-break: break-word; position: relative; }
+        .user { background-color: #0a84ff; color: #fff; align-self: flex-end; }
+        .assistant { background-color: #333; color: #eee; align-self: flex-start; }
+        .bubble::after { content: ""; position: absolute; bottom: 0; width: 0; height: 0; border: 10px solid transparent; }
+        .user.bubble::after { right: -10px; border-left-color: #0a84ff; border-right: 0; margin-bottom: -5px; }
+        .assistant.bubble::after { left: -10px; border-right-color: #333; border-left: 0; margin-bottom: -5px; }
+        .loading { font-style: italic; opacity: 0.6; margin-top: 10px; display: none; }
+        .error { color: #ff5555; }
+        form.chat-input { display: flex; gap: 10px; }
+        form.chat-input input[type="text"] { flex: 1; padding: 12px; background-color: #2d2d2d; color: #fff; border: none; border-radius: 8px; font-size: 15px; }
+        form.chat-input button { padding: 12px 20px; background-color: #0a84ff; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; }
+        .upload-form input[type="file"] { background-color: #2d2d2d; color: #ccc; padding: 8px; border-radius: 6px; border: none; }
+        .upload-form button { margin-left: 8px; padding: 8px 16px; background-color: #0a84ff; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .reset-button { margin-top: 10px; background-color: #444; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; }
+        .model-select { margin-bottom: 20px; }
+        select { background-color: #2d2d2d; color: #fff; padding: 8px; border: none; border-radius: 6px; width: 100%; }
+        .status { font-size: 14px; color: #aaa; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <header>📘 AI 기술문서 요약 & 챗봇</header>
+    <main>
+        <div class="sidebar">
+            <div class="model-select">
+                <label for="model">사용할 LLM 선택:</label>
+                <select id="model" name="model">
+                    {% for model in models %}
+                        <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <form class="upload-form" id="upload-form" enctype="multipart/form-data">
+                <input type="file" name="pdf_file" accept=".pdf" required>
+                <button type="submit">📤 업로드</button>
+            </form>
+            <div class="status" id="status">{{ "문서 기반 대화 모드" if summary else "일반 대화 모드" }}</div>
+            <h3>📄 문서 요약</h3>
+            <div id="summary">{{ summary|safe }}</div>
+            <form id="reset-form">
+                <button type="submit" class="reset-button">🧹 채팅 초기화</button>
+            </form>
+            <form id="save-form">
+                <button type="submit" class="reset-button">💾 대화 저장</button>
+            </form>
+            <form id="load-form">
+                <button type="submit" class="reset-button">🔁 이전 대화 불러오기</button>
+            </form>
+        </div>
+        <div class="chat-area">
+            <div class="messages" id="messages">
+                {% for speaker, message in chat_history %}
+                    <div class="message {{ speaker }} bubble">{{ message }}</div>
+                {% endfor %}
+            </div>
+            <div id="loading" class="loading">🤖 처리 중...</div>
+            <form class="chat-input" id="chat-form">
+                <input type="text" name="question" placeholder="질문을 입력하세요..." required>
+                <button type="submit">💬 전송</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const uploadForm = document.getElementById('upload-form');
+        const chatForm = document.getElementById('chat-form');
+        const resetForm = document.getElementById('reset-form');
+        const saveForm = document.getElementById('save-form');
+        const loadForm = document.getElementById('load-form');
+        const modelSelect = document.getElementById('model');
+        const loading = document.getElementById('loading');
+        const messages = document.getElementById('messages');
+        const summaryDiv = document.getElementById('summary');
+        const statusDiv = document.getElementById('status');
+
+        function showLoading() { loading.style.display = 'block'; }
+        function hideLoading() { loading.style.display = 'none'; }
+
+        function updateChatHistory(chatHistory) {
+            messages.innerHTML = '';
+            chatHistory.forEach(([speaker, text]) => {
+                const div = document.createElement('div');
+                div.className = `message ${speaker} bubble`;
+                div.innerHTML = text;
+                messages.appendChild(div);
+            });
+            messages.scrollTop = messages.scrollHeight;
+            MathJax.typeset();
+        }
+
+        function updateStatus(summary) {
+            statusDiv.textContent = summary ? "문서 기반 대화 모드" : "일반 대화 모드";
+        }
+
+        modelSelect.addEventListener('change', async () => {
+            const formData = new FormData();
+            formData.append('model', modelSelect.value);
+            try {
+                const response = await fetch('/select_model', { method: 'POST', body: formData });
+                const data = await response.json();
+                console.log(`선택된 모델: ${data.selected_model}`);
+            } catch (error) {
+                console.error('모델 선택 오류:', error);
+            }
+        });
+
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            const formData = new FormData(uploadForm);
+            try {
+                const response = await fetch('/upload', { method: 'POST', body: formData });
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                summaryDiv.innerHTML = data.summary;
+                updateChatHistory(data.chat_history);
+                updateStatus(data.summary);
+            } catch (error) {
+                summaryDiv.innerHTML = `<span class="error">오류: ${error.message}</span>`;
+            } finally {
+                hideLoading();
+            }
+        });
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            const formData = new FormData(chatForm);
+            try {
+                const response = await fetch('/chat', { method: 'POST', body: formData });
+                const data = await response.json();
+                if (!data.chat_history) throw new Error('채팅 데이터가 없습니다.');
+                updateChatHistory(data.chat_history);
+                chatForm.reset();
+            } catch (error) {
+                messages.innerHTML += `<div class="message error">오류: ${error.message}</div>`;
+            } finally {
+                hideLoading();
+            }
+        });
+
+        resetForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            try {
+                const response = await fetch('/reset', { method: 'POST' });
+                const data = await response.json();
+                updateChatHistory(data.chat_history);
+            } catch (error) {
+                messages.innerHTML += `<div class="message error">오류: ${error.message}</div>`;
+            } finally {
+                hideLoading();
+            }
+        });
+
+        saveForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            try {
+                const response = await fetch('/save', { method: 'POST' });
+                const data = await response.json();
+                alert(data.message);
+            } catch (error) {
+                alert(`저장 실패: ${error.message}`);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        loadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            try {
+                const response = await fetch('/load', { method: 'POST' });
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                updateChatHistory(data.chat_history);
+                summaryDiv.innerHTML = data.summary;
+                modelSelect.value = data.selected_model;
+                updateStatus(data.summary);
+            } catch (error) {
+                messages.innerHTML += `<div class="message error">오류: ${error.message}</div>`;
+            } finally {
+                hideLoading();
+            }
+        });
+    </script>
+</body>
+</html>
