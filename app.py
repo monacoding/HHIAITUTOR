@@ -2,30 +2,37 @@ from flask import Flask, render_template, request, jsonify, session
 import os
 import fitz  # PyMuPDF
 import requests
-from dotenv import load_dotenv
 import json
 import uuid
-import shutil  # 디렉토리 초기화용
-
-load_dotenv()
+import shutil
+from datetime import datetime
+import tiktoken  # 토큰 수 계산용
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret")
 
-# 메모리 기반 세션으로 변경 (서버 재시작 시 초기화)
-app.config['SESSION_TYPE'] = 'memory'  # 파일 시스템 대신 메모리 사용
+app.config['SESSION_TYPE'] = 'memory'
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
 
 UPLOAD_FOLDER = os.path.join("static", "uploads")
 CHAT_LOG_FOLDER = "chat_logs"
 CONTENT_FOLDER = os.path.join("static", "content")
+DATA_FOLDER = "data"
+LEARNED_CONTENT_FILE = os.path.join(CONTENT_FOLDER, "learned_content.txt")
 
-# 서버 시작 시 기존 데이터 삭제
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(CHAT_LOG_FOLDER, exist_ok=True)
+os.makedirs(CONTENT_FOLDER, exist_ok=True)
+os.makedirs(DATA_FOLDER, exist_ok=True)
+
+# 서버 시작 시 기존 데이터 삭제 (DATA_FOLDER 제외)
 for folder in [UPLOAD_FOLDER, CHAT_LOG_FOLDER, CONTENT_FOLDER]:
     if os.path.exists(folder):
-        shutil.rmtree(folder)  # 디렉토리 완전 삭제
+        shutil.rmtree(folder)
     os.makedirs(folder, exist_ok=True)
+
+learned_files = {}
 
 def extract_text_from_pdf(filepath):
     text = ""
@@ -33,6 +40,57 @@ def extract_text_from_pdf(filepath):
         for page in doc:
             text += page.get_text()
     return text
+
+def load_learned_content():
+    if os.path.exists(LEARNED_CONTENT_FILE):
+        with open(LEARNED_CONTENT_FILE, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
+def save_learned_content(content):
+    with open(LEARNED_CONTENT_FILE, "w", encoding="utf-8") as f:
+        f.write(content)
+
+def count_tokens(text):
+    # tiktoken을 사용해 토큰 수 계산 (GPT-3 인코딩 기준으로 추정)
+    encoding = tiktoken.get_encoding("cl100k_base")
+    return len(encoding.encode(text))
+
+def get_max_tokens(model):
+    # 모델별 최대 토큰 수 (Ollama 공식 문서 미제공, 일반적인 값 가정)
+    max_tokens = {
+        "mistral": 8192,
+        "llama3": 4096,
+        "default": 4096  # 알 수 없는 모델의 기본값
+    }
+    return max_tokens.get(model, max_tokens["default"])
+
+def update_learned_content():
+    global learned_files
+    current_files = {}
+    learned_content = ""
+
+    for filename in os.listdir(DATA_FOLDER):
+        if filename.endswith(".pdf"):
+            filepath = os.path.join(DATA_FOLDER, filename)
+            mod_time = os.path.getmtime(filepath)
+            current_files[filepath] = mod_time
+
+    if current_files != learned_files:
+        print("파일 변경 감지, 재학습 시작...")
+        for filepath in current_files:
+            if filepath not in learned_files or current_files[filepath] != learned_files.get(filepath):
+                print(f"학습: {filepath}")
+                learned_content += f"\n\n--- {os.path.basename(filepath)} ---\n{extract_text_from_pdf(filepath)}"
+        save_learned_content(learned_content)
+        learned_files = current_files
+    else:
+        print("변경된 파일 없음, 기존 학습 내용 사용.")
+        learned_content = load_learned_content()
+    
+    return learned_content
+
+learned_content = update_learned_content()
 
 def get_session_id():
     if "session_id" not in session:
@@ -103,13 +161,19 @@ def index():
     models = get_ollama_models()
     if "selected_model" not in session or session["selected_model"] not in models:
         session["selected_model"] = models[0] if models else "Ollama server not running"
-    # 서버 재시작 시 모든 데이터 초기화 상태로 렌더링
+    
+    learned_content = load_learned_content()
+    used_tokens = count_tokens(learned_content)
+    max_tokens = get_max_tokens(session.get("selected_model", "default"))
+    
     return render_template(
         "index.html",
         summary=load_content(session_id, "summary"),
         chat_history=json.loads(load_content(session_id, "chat_history") or "[]"),
         models=models,
-        selected_model=session.get("selected_model")
+        selected_model=session.get("selected_model"),
+        used_tokens=used_tokens,
+        max_tokens=max_tokens
     )
 
 @app.route("/models", methods=["GET"])
@@ -194,11 +258,14 @@ def chat():
     chat_history = json.loads(load_content(session_id, "chat_history") or "[]")
     chat_history.append(("user", user_question))
 
+    learned_content = load_learned_content()
     extracted_text = load_content(session_id, "extracted_text")
-    if extracted_text.strip():
+    combined_context = learned_content + (f"\n\n--- 업로드된 문서 ---\n{extracted_text}" if extracted_text.strip() else "")
+
+    if combined_context.strip():
         messages = [
-            {"role": "system", "content": "넌 조선산업 기술문서를 잘 이해하고 설명하는 AI 튜터야. 사용자가 업로드한 문서 내용만을 기반으로 답변하며, 수학 수식은 LaTeX 형식(예: $Q_{\\text{actual}} = C_d \\cdot A \\cdot \\sqrt{\\frac{2 \\cdot \\Delta P}{\\rho}}$)으로 작성해줘. 이전 대화 맥락을 기억하고, 항상 따뜻하게, 이모지와 함께 대답해줘! 🛳️😊"},
-            {"role": "system", "content": f"📄 업로드된 문서 전체 내용:\n{extracted_text}"}
+            {"role": "system", "content": "넌 조선산업 기술문서를 잘 이해하고 설명하는 AI 튜터야. 아래 제공된 학습된 내용과 업로드된 문서 내용만을 기반으로 답변하며, 수학 수식은 LaTeX 형식(예: $Q_{\\text{actual}} = C_d \\cdot A \\cdot \\sqrt{\\frac{2 \\cdot \\Delta P}{\\rho}}$)으로 작성해줘. 이전 대화 맥락을 기억하고, 항상 따뜻하게, 이모지와 함께 대답해줘! 🛳️😊"},
+            {"role": "system", "content": f"📄 학습된 내용과 문서:\n{combined_context}"}
         ]
     else:
         messages = [

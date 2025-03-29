@@ -1,0 +1,443 @@
+
+
+--- goetze-safety-valve-basics-en.pdf ---
+1
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+GENERAL PRINCIPLES: 
+SAFETY VALVES
+2
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+EXEMPTION FROM LIABILITY
+Notes on GOETZE exemption from liability for certified service companies
+•	
+Declaration of exemption from liability.
+•	
+Service company is liable.
+•	
+The company Goetze KG Armaturen allows customers to adjust the supplied valves themselves and to use their
+own seals. In this case the company Goetze KG Armaturen does not assume any warranty for defects or dama-
+ges, unless the customer proves that the damage was not caused by the adjustment or modification carried out
+by him/her.
+•	
+Goetze KG Armaturen does not assume any warranty for defects or damage caused by unauthorised adjustment
+and sealing of safety valves.
+What happens to the manufacturer's warranty when the seal is opened? 
+In general, the manufacturer's warranty expires when the seal is opened. 
+PURPOSE OF SAFETY VALVE
+A safety valve serves one single purpose: to protect against unacceptable overpressure in installations or parts of 
+installations which would result in the system bursting. A safety valve is a mechanical safety device that responds 
+when all other control and monitoring devices fail and an impermissibly high pressure occurs in a vessel, storage 
+tank, pipeline or something similar. For example, this can occur due to cooling failure, incorrect dosing or a blocked 
+discharge line. If the pressure in a vessel protected by a safety valve rises above a permissible value, the valve opens 
+and allows a part of the pressurised Media to escape from the vessel. As a result, the pressure drops again. When 
+the pressure has dropped far enough, the safety valve closes. As a result, a safety valve does not allow the entire 
+contents of a vessel to escape but only as much as is necessary to reduce the pressure back to a permissible value.
+3
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+STRUCTURE / FUNCTION
+A spring-loaded safety valve (Figure 1) is a mechanical component consisting of the following main components: 
+seat, disc, lifting ring, spring, spindle and a pressure screw for adjusting the spring preload. These components are 
+installed in a body with connections for the supply and discharge lines and a spring spring housing.
+Spring housing sealing
+Pressure screw
+Pressure setting
+Spring housing
+Spring
+Seal of the spring housing
+Guide plate
+Disc
+Outlet
+Seat
+Inlet
+Seal
+Body
+Lift
+Cap
+Lifting
+Metal bellows
+Figure 1: Cross section of a spring-loaded safety valve.
+Spindle
+Lifting ring
+4
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+Figure 2: Illustration of the forces in the valve in the 	
+  closed state.
+Figure 3: Illustration of the forces in the valve in 	
+  the open state.
+Via the supply line, the fluid enters the safety valve vertically from below. During normal operation, the valve plate sits 
+on the valve seat and closes the opening. The force required for this is applied by the spring. It is clamped between 
+an upper fixed and a lower movable valve disc. The pressure screw, which determines the position of the upper valve 
+disc, can be used to adjust the contraction of the spring. This results in the pretension of the spring, and therefore the 
+response pressure. The spindle guides the disc and transmits the force of the spring via the spring plate. The seat has a 
+defined internal diameter, which is used to determine the maximum mass flowto which the valve can dissipate, taking 
+the flow coefficient into account. 
+When closed, the spring force F1 outweighs the Media force F2 (Figure 2). If the pressure in the system increases and 
+therefore the force F2, the spring force F1 can no longer keep the valve completely closed above a certain pressure. A 
+soft hissing sound from the valve can be heard. This is the response point of the safety valve (response point = lowest 
+pressure at which the valve is audibly leaking). If the pressure continues to rise, the valve opens completely and the 
+Media can flow out (Figure 3).
+5
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+Figure 4: Stroke-pressure diagram describing the opening and closing behaviour of spring-loaded full-stroke or normal 	
+  safety valves. 
+A distinction is made between valves with different opening characteristics. The opening behaviour of a valve can 
+best be illustrated in a stroke-pressure diagram (Figure 4) as a hysteresis curve. The stroke over the pressure is plot-
+ted in it. The regular maximum operating pressure is approximately 85% of the valve response pressure. When the 
+response pressure (1) is reached, the valve opens. First proportional to the increase in pressure, at the "pop point" 
+(2) abruptly to its maximum stroke. In terms of design, this is achieved by increasing the area exposed to pressure.
+The pressure acts only on the cone when the valve is closed. When the valve is open, pressure is also applied to the
+stroke ring. This suddenly increases the force and the valve opens. The pressure at which the valve reaches its full
+opening is the opening pressure (3) of the valve. The pressure difference between response pressure and opening
+pressure is called the opening pressure difference.
+If the pressure drops below the response pressure (4), the valve closes slowly at first, then abruptly again. The pres-
+sure difference between the closing pressure (5) and the response pressure is referred to as the closing pressure 
+difference. It is caused by the impulse current of the flowing fluid and the increase in the pressure contact area 
+caused by the lifting ring of the valve. The valve must comply with certain opening and closing pressure differentials 
+(according to DIN EN ISO 4126-1 and AD2000-A2) depending on the type (standard valve or full globe valve) and 
+Media (compressible or incompressible):
+Opening pressure difference:
+•	
+10% for normal and proportional safety valves (all media)
+•	
+5% for full stroke safety valves (all media)
+Closing pressure difference: 
+•	
+10% for compressible media (both types)
+•	
+20% for non-compressible media (both types)
+6
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+In the case of full stroke valves, there is an additional requirement that the proportion of the stroke up to sudden 
+opening (proportional safety valves according to AD2000-A2) must not exceed 20% of the total stroke.
+With the third type of valve, the proportional safety valve, the stroke of the valve increases or decreases almost 
+continuously with increasing or decreasing pressure. A sudden opening without pressure increase over a range of 
+more than 10% of the stroke does not occur. After tripping, these safety valves achieve the stroke required for the 
+mass flow to be discharged (DIN EN ISO 4126-1 and AD2000-A2) within a maximum pressure rise of 10%.
+Figure 5: Stroke-pressure diagram to describe the opening and closing behaviour of spring-loaded 	
+  proportional safety valves	
+   Response pressure (first audible air noise or first visible drops of water) 	
+   Blow-off pressure (maximum stroke reached)	
+   The pressure at which the valve begins to close	
+   Closing pressure (valve is closed and tight
+1
+2
+3
+4
+Proportional valves 
+(Safety valves / Pressure relief valves / Control valves)
+7
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+VARIANTS
+Various versions of individual valve components are available for individual valve adaptation to the conditions in the 
+plant.
+Lifting
+There is a possibility of a version with rotary lifting or lever lifting for manual opening and lifting of the valve. 
+For a rotary lift (Figure 6), turning a knurled nut on the bonnet of the valve raises the stem. This pulls the disc located on 
+the spindle up with it. This creates a gap between the seat and disc and fluid can flow through the valve. Rotary lifting is 
+usually used for threaded valves up to 2'' and for air and water applications.
+Pulling on a lever causes the spindle and disc to lift off the seat for lever lifting (Figure 7). Lever lifting is usually used with 
+flange safety valves and steam valves. For the latter, the installation of a lever lift is mandatory. 
+A version without lifting device (Figure 8) is also available.
+Figure 6: Rotary lifting device
+Figure 7: Lever lifting device
+Figure 8: without lifting device
+Blocking Screw (Option A01)
+If the valve in the system is to be closed and tight beyond its response pressure, for example for a pressure test, a blo-
+cking screw is used. This is screwed into a threaded hole provided for this purpose in the cap of the valve from above to 
+the spindle (Figure 9). This prevents the valve from opening. After the pressure test, the pressure screw must be remo-
+ved again as otherwise the valve will not be able to open even in an emergency. Close the threaded hole in the cap with 
+another screw (Figure 10).
+Figure 10: The spindle is free and the cap is 	
+    sealed gas-tight.
+Figure 9: The spindle is locked.
+8
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+Stroke Sensor (Option S62)
+A stroke sensor is offered for monitoring the response of a valve. This is screwed into the cap from above like the 
+blocking screw (Figure 12). It strikes when the valve reaches its full stroke. This means that the control station of the 
+system in which the valve is installed directly notices that the safety valve has blown off. For some series, lateral 
+installation of the sensor is also possible (Figure 11).
+Gas-Tight / Open
+With some media it may be necessary to protect the environment from the influences of the Media even when the 
+valve responds. Goetze offers valves in a gas-tight version for this purpose. However, if the Media does not pose any 
+danger to the environment, an open or non-gas-tight version can be selected.
+Figure 13: Safety valve in open version.
+Figure 11: Installation of the stroke sensor 	
+    from the side.
+Figure 12: Installation of the stroke sensor from above.
+Figure 14: Safety valve in gas-tight design.
+9
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+Bellows / Diaphragm
+If the spring chamber must also be protected from the Media in the event of a response, the use of a bellows is 
+recommended. This connects the guide plate with the disc and thus prevents the Media from entering the spring 
+chamber through the spindle guide. In this way, it also prevents soiling or sticking of the sliding parts and ensures 
+perfect functioning of the valve even with sticky or viscous media. In addition, the metallic bellows compensates for 
+counter pressure. The response pressure of the valve remains the same regardless of whether it is an external back 
+pressure or the intrinsic back pressure. In the event of a blowdown, the natural back pressure can build up at the 
+outlet of the valve depending on the dimensions and design of the installed blowdown line.
+An elastomer diaphragm or an elastomer bellows can prevent the Media from penetrating into the spring chamber 
+instead of a metal bellows, depending on the valve type, if back pressure compensation is not required and the 
+Media is neutral.
+Figure 15: Cutaway model of valve with bellows.
+Figure 16: Cross section of a valve with elastomer bellows.
+10
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+COMPARISON
+There are different types of valves that perform different tasks in plants and require appropriate approvals and tests. 
+•	
+Safety valves are safety equipment in accordance with Directive 2014/68/EU, Pressure Equipment Directive.
+As the last link in a series of safety measures, they prevent the plant component from bursting due to an imper-
+missibly high pressure. They are set to the desired response pressure, marked accordingly and sealed. A later
+change of the setting pressure is only possible in experienced workshops. The set pressure of all safety valves
+is checked before delivery, if required also in the presence of an inspection company. A safety valve must pass
+an EU type examination and, if necessary, a TÜV component test before it can be sold in series.
+•	
+Pressure relief valves fulfil the same function as safety valves. However, they have no safety function and are
+therefore not classified as safety equipment but only as pressure equipment according to the Pressure Equip-
+ment Directive. No special examination is necessary. As a rule, they have a proportional opening characteristic.
+Pressure relief valves do not achieve the performance of safety valves and can be delivered adjusted, marked
+and sealed, but do not have to be.
+•	
+The set pressure within the spring range can be adjusted by the plant operator as required in the case of overflow/
+control valves. They perform a "pressure control task" in the system. As this is not a safety-relevant function, over-
+flow/regulating valves are only classified as pressure-maintaining equipment according to the Pressure Equipment
+Directive. No special examination is necessary. These valves have a proportional opening characteristic in order to
+avoid pressure surges in the system. Overflow valves must always be gas-tight
+•	
+Pressure reducing valves require a component approval for building services engineering if they are used for
+drinking water installations. Their task is to reduce the pressure in a part of the plant. While with pressure relief
+valves the presence of an excessively high pressure on the inlet side and therefore a flow through the valve is
+the exception, with pressure reducing valves a higher applied pressure on the inlet side is the rule. They are conti-
+nuously flowed through and ensure a uniform fluid flow with constant, reduced pressure on the outlet side even
+with fluctuating pressure on the inlet side (e.g. after a pump).
+Figure 17: Valve type comparison
+11
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+APPROVALS
+In order to be allowed to sell a safety valve, it must pass an EU type examination and, if applicable, a TÜV component 
+examination.
+Basically, an entrance examination consists of four parts: 
+1.	
+The test on the sufficient dimensioning of the components as well as the suitability of the materials used.
+2.	
+Ensuring that the specific design requirements required by the application have been met.
+3.	
+The certification of the performances (discharge figures) with the media air and water.
+4.	
+Compliance with the functional characteristics (opening and closing pressure differences) with the media air and
+water to demonstrate suitability for:	
+•	
+Air:
+- Air, gases and technical vapours
+- Steam
+- Heating water (up to 120 °C)	
+- Solar heating systems
+•	
+Water:
+- Liquids
+- Hot water (up to 95 °C)
+These tests are described in detail in the VdTÜV data sheet "Safety Valve 100" and other applicable documents. 
+EU Type Examination
+An EU type examination is a type approval by an independent "notified body" according to the Pressure Equipment 
+Directive 2014/68/EU. It checks whether the minimum requirements are met for a safety valve as required in Annex 1 
+of the DGR and in the harmonised standard ISO 4126-1.
+During a type examination, the valves can be approved for the following media:
+• L	
+for liquids
+• S/G	
+for steam/gas
+The manufacturer is also obliged to supply the valve with assembly and operating instructions including a declaration of 
+conformity in accordance with DGR 2014/68/EU. These inspection certificates are valid for a period of 10 years.
+12
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+TÜV Component Test
+In order to pass a TÜV component test, the requirements of the following standards must be met as well:
+•	
+VdTÜV data sheet SV 100
+•	
+AD2000 data sheet A2
+This allows an additional application-specific marking of the valves:
+•	
+D/G/H	
+for hot water with permissible flow temperatures up to 120 °C (heating systems according to 		
+DIN EN 12828)
+•	
+H		
+for hot water of 2.5 bar and 3 bar with a permissible flow temperature of up to 120 °C and a permissible 				
+heat output of up to 2700 kW (water heating systems to DIN EN 12828)	
+•	
+SOL	
+for closed intrinsically safe solar heating systems with water or water mixtures as heat transfer 		
+Media according to DIN EN 12976-1
+•	
+W		
+for water heating systems according to DIN EN 12897 up to 10 bar
+•	
+F/K/S	
+for stationary pressure vessels and vehicle containers for liquid, granular and powdery goods 		
+according to TRB 801 No. 22 and 23
+Further Approvals
+Goetze valves also meet the criteria for various other approvals. An overview of which approvals or certificates are valid 
+for which series can be found on the Goetze homepage (https://www.goetze-armaturen.com/en/company/certificates/
+products-and-corresponding-certificates/). 
+Overview of existing approvals and certificates:
+GENERAL TYPE TEST APPROVALS
+APPLICATIONS: POTABLE WATER AND BUILDING TECHNOLOGY
+APPLICATIONS: SHIPBUILDING AND RAILWAY
+	 TYPE 
+APPROVAL
+	 TYPE 
+APPROVAL
+	 TYPE 
+APPROVAL
+	 TYPE 
+APPROVAL
+	 TYPE 
+APPROVAL
+	 DEUTSCHE BAHN
+	 TYPE 
+APPROVAL
+	 TYPE 
+APPROVAL (DE)
+	 TYPE 
+APPROVAL (FR)
+	 TYPE 
+APPROVAL (EN)
+	 TYPE 
+APPROVAL
+	 TYPE 
+APPROVAL (NO)
+	 TYPE 
+APPROVAL (PL)
+TS
+	 CANADIAN 
+REGISTRATION
+NUMBER (CRN)
+CRN
+	 KOSHA
+	 EUROPEAN
+PED
+	 NATIONAL 
+TYPE TEST 
+(TÜV)
+	 EC-TYPE TEST
+	 TYPE TEST
+(USA)
+National 
+Type Test 
+(TÜV)
+EU type test
+	 KOREA GAS 
+SAFETY (KR)
+	 MANUFACTURE 
+LICENSE (CHINA) 
+TSG ZF001-2006
+	 TR ZU 032/2013 
+(RU)
+	 TYPE 
+APPROVAL (UK)
+13
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+Definition, Standards and Regulations
+National: 
+•	
+TRD 421: Safety devices against excess pressure
+For safety valves for group I, III and IV steam boilers
+•	
+TRD 721: Safety devices against excess pressure
+For safety valves for group II steam boilers
+•	
+DIN 4751: Water heating
+For closed, thermostatically protected heat generation systems with flow temperatures up to 120°C as safety
+equipment
+•	
+DIN 4753: Domestic hot water heaters, domestic hot water heating systems and DHW storage tanks
+•	
+DIN 4747: District heating systems
+As safety-related equipment for substations, house stations and house systems for connection to heating
+water district heating networks
+•	
+AD 2000 A2: Safety devices against excess pressure
+General for safety valves
+European / International:
+•	
+DIN EN ISO 4126 series: Safety devices against impermissible overpressure
+in particular Part 1: Safety valves and Part 7: General data
+•	
+RL 2014/68/EU: European Pressure Equipment
+Directive for pressure equipment with a maximum allowable pressure (PS) of more than 0.5 bar
+•	
+DIN EN 12828: Heating systems in buildings
+For the planning of hot water heating systems
+•	
+DIN EN 12952: Water-tube boilers and system components
+Particularly part 10: Requirements for safety devices against excessive pressure
+•	
+DIN EN 12953: Shell boilers
+Particularly Part 8: Requirements for safety devices against excessive pressure
+Further application-specific standards:
+•	
+DIN EN 764-7: Safety devices for unfired pressure equipment
+•	
+DIN EN 13648: Safety valves for cryogenic operation
+•	
+DIN SPEC 4683: Liquid helium cryostats - Safety devices against excess pressure
+14
+Version 2023 / 02 
+www.goetze-group.com  |  info@goetze.de  |  Phone: +49 (0) 7141 / 488 94 60
+MARKING / TESTING
+The labelling is carried out in accordance with the standards and regulations applied. The data is either entered on a 
+nameplate attached to the valve or lasered directly onto the valve spring housing. 
+Figure 18: Identification on a nameplate 
+attached to the valve.
+Valve type
+Nominal size
+Seat sealing material
+Narrowest cross-section of flow
+Serial number
+Setting pressure
+Allowable back pressure
+Set temperature
+Capacity for steam
+Capacity for air
+Capacity for water
+TÜV number - safety valve -  
+year of component inspection - inspection number
+Co-efficient for steam / gases
+Co-efficient for liquids
+Valve stroke
+Datamatrix Code (serial number)
+General and, if applicable, application-specific standards
+CE labelling
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18

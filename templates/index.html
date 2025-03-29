@@ -29,10 +29,11 @@
         .model-select { margin-bottom: 20px; }
         select { background-color: #2d2d2d; color: #fff; padding: 8px; border: none; border-radius: 6px; width: 100%; }
         .status { font-size: 14px; color: #aaa; margin-bottom: 10px; }
+        .token-info { font-size: 14px; color: #bbb; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <header>📘 AI 기술문서 요약 & 챗봇</header>
+    <header>📘 현대중공업 선장설계부 AI 비서</header>
     <main>
         <div class="sidebar">
             <div class="model-select">
@@ -50,6 +51,9 @@
             <div class="status" id="status">{{ "문서 기반 대화 모드" if summary else "일반 대화 모드" }}</div>
             <h3>📄 문서 요약</h3>
             <div id="summary">{{ summary|safe }}</div>
+            <div class="token-info">
+                학습된 내용 토큰: {{ used_tokens }} / 최대 허용 토큰: {{ max_tokens }}
+            </div>
             <form id="reset-form">
                 <button type="submit" class="reset-button">🧹 채팅 초기화</button>
             </form>
@@ -111,7 +115,14 @@
             try {
                 const response = await fetch('/select_model', { method: 'POST', body: formData });
                 const data = await response.json();
-                console.log(`선택된 모델: ${data.selected_model}`);
+                if (data.error) {
+                    alert(data.error);
+                    modelSelect.value = data.selected_model;
+                } else {
+                    console.log(`선택된 모델: ${data.selected_model}`);
+                    // 모델 변경 시 토큰 정보 업데이트를 위해 페이지 새로고침
+                    location.reload();
+                }
             } catch (error) {
                 console.error('모델 선택 오류:', error);
             }
